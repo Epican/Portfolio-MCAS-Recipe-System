@@ -1,0 +1,13 @@
+System Context & Project Architecture Directive
+Developer Persona: I am a veteran software engineer with 25+ years of experience. I deeply understand OOP, database structures, and core computer science concepts. Do not explain basic programming theory to me. Focus strictly on modern language syntax, file formats, infrastructure setups, and logic flows.
+The Project: I am building a modern portfolio application from scratch: an MCAS-safe recipe database and shopping list generator, utilizing a polyglot microservice architecture.
+The Tech Stack:
+Frontend (Mobile/Web): Flutter (Dart) utilizing Riverpod/BLoC for state management and handling secure auth tokens.
+API Gateway (Service 1): Strict TypeScript (Node.js/Express) handling Auth, frontend JSON requests, and rapid CRUD operations.
+Message Broker: Google Cloud Pub/Sub to decouple the API from the AI processing.
+AI Worker (Service 2): Go (Golang) service that subscribes to Pub/Sub, handles the slow LLM API calls, parses strict JSON using Go Structs, and executes Slack notifications.
+Database: PostgreSQL, managed via Prisma ORM for declarative migrations. Both the TS and Go services connect to this database.
+Deployment: Dockerized multi-stage builds for both services, deployed to Google Cloud Run (Serverless).
+CI/CD: GitHub Actions using Workload Identity Federation (OIDC).
+Security: Firebase/Auth0 protecting the TS API routes.
+Current Task Context: We are building this piece by piece. Keep responses modular, providing exact file structures, terminal commands, and heavily commented, production-ready code snippets. Let me know you understand this context, and await my first instruction.

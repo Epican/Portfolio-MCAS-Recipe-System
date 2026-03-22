@@ -1,0 +1,101 @@
+# --- OS & editors ---
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+*.iml
+*.swp
+*.swo
+*~
+
+# --- Environment & secrets ---
+.env
+.env.*
+!.env.example
+!.env*.example
+*.pem
+*.p12
+*-credentials.json
+*-service-account*.json
+**/service-account*.json
+
+# --- Node / TypeScript (pnpm workspace) ---
+node_modules/
+.pnpm-debug.log*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+pnpm-lock.yaml.bak
+
+# Builds & caches
+dist/
+build/
+out/
+.next/
+.nuxt/
+.cache/
+.turbo/
+.parcel-cache/
+*.tsbuildinfo
+coverage/
+*.lcov
+.nyc_output/
+
+# --- Prisma ---
+# Keep: prisma/schema.prisma, migrations/
+# Ignore local DB dumps / scratch
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# --- Go ---
+bin/
+vendor/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+coverage.out
+cpu.prof
+mem.prof
+
+# --- Flutter / Dart ---
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+**/doc/api/
+**/ios/Flutter/.last_build_id
+**/ios/Pods/
+**/macos/Flutter/ephemeral/
+**/linux/flutter/ephemeral/
+**/windows/flutter/ephemeral/
+
+# Symbolication & obfuscation (release)
+app.*.symbols
+app.*.map.json
+
+# --- Logs & temp ---
+logs/
+*.log
+tmp/
+temp/
+*.tmp
+
+# --- Terraform / IaC (if added) ---
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+
+# --- Misc ---
+*.orig
+*.rej
