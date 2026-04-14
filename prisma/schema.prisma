@@ -1,0 +1,37 @@
+// packages/database/prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// The core safety ranking for MCAS ingredients
+enum SafetyRank {
+  LOW_HISTAMINE    // Green: Usually safe
+  MODERATE         // Yellow: Caution required
+  HIGH_HISTAMINE   // Red: Avoid
+  UNKNOWN          // Gray: Needs AI verification
+}
+
+model Recipe {
+  id           String       @id @default(uuid())
+  title        String
+  description  String?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  ingredients  Ingredient[]
+  isVerified   Boolean      @default(false) // Toggled by the Go AI Worker later
+}
+
+model Ingredient {
+  id          String     @id @default(uuid())
+  name        String
+  safetyRank  SafetyRank @default(UNKNOWN)
+  safetyNote  String?    // Detailed explanation from the AI
+  recipeId    String
+  recipe      Recipe     @relation(fields: [recipeId], references: [id])
+}

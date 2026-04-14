@@ -1,0 +1,37 @@
+name: PR Gatekeeper
+
+on:
+    pull_request:
+        branches:
+            - main
+
+jobs:
+  validate-gateway:
+    name: Validate API Gateway
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Pull down your repository code
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. Install pnpm
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 10.32.1
+
+      # 3. Setup Node environments and cache dependencies
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      # 4. Install dependencies strictly from the lockfile
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      # 5. Run the typechecker for the api-gateway
+      - name: Typecheck API Gateway
+        run: pnpm --filter api-gateway exec tsc --noEmit
+                    
