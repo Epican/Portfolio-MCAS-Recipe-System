@@ -24,7 +24,7 @@ app.post('/recipes', (req: Request, res: Response): void => {
   const validationResult = createRecipeSchema.safeParse(req.body);
 
   if (!validationResult.success) {
-    // Return 400 Bad Request immediately with the exact fields that failed
+    // Return 400 Bad Request immediately with the exact fields that failed.
     res.status(400).json({
       error: 'Invalid payload',
       details: validationResult.error.format(),
