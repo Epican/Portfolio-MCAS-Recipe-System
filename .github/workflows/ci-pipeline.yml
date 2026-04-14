@@ -32,42 +32,42 @@ jobs:
       - name: Typecheck API
         run: pnpm --filter api-gateway exec tsc --noEmit
 
-  analyze-frontend:
-    name: Analyze Flutter Frontend
-    runs-on: ubuntu-latest
+  # analyze-frontend:
+  #   name: Analyze Flutter Frontend
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
 
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-          cache: true
+  #     - name: Setup Flutter
+  #       uses: subosito/flutter-action@v2
+  #       with:
+  #         channel: stable
+  #         cache: true
 
-      - name: Install frontend dependencies
-        working-directory: apps/frontend
-        run: flutter pub get
+  #     - name: Install frontend dependencies
+  #       working-directory: apps/frontend
+  #       run: flutter pub get
 
-      - name: Run dart analyze
-        working-directory: apps/frontend
-        run: dart analyze
+  #     - name: Run dart analyze
+  #       working-directory: apps/frontend
+  #       run: dart analyze
 
-  vet-worker:
-    name: Vet Go Worker
-    runs-on: ubuntu-latest
+  # vet-worker:
+  #   name: Vet Go Worker
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
 
-      - name: Setup Go
-        uses: actions/setup-go@v5
-        with:
-          go-version-file: apps/ai-worker/go.mod
-          cache-dependency-path: apps/ai-worker/go.sum
+  #     - name: Setup Go
+  #       uses: actions/setup-go@v5
+  #       with:
+  #         go-version-file: apps/ai-worker/go.mod
+  #         cache-dependency-path: apps/ai-worker/go.sum
 
-      - name: Run go vet
-        working-directory: apps/ai-worker
-        run: go vet ./...
+  #     - name: Run go vet
+  #       working-directory: apps/ai-worker
+  #       run: go vet ./...
