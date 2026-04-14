@@ -1,0 +1,73 @@
+name: CI Pipeline
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  typecheck-api:
+    name: Typecheck API Gateway
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.32.1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck API
+        run: pnpm --filter api-gateway exec tsc --noEmit
+
+  analyze-frontend:
+    name: Analyze Flutter Frontend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install frontend dependencies
+        working-directory: apps/frontend
+        run: flutter pub get
+
+      - name: Run dart analyze
+        working-directory: apps/frontend
+        run: dart analyze
+
+  vet-worker:
+    name: Vet Go Worker
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: apps/ai-worker/go.mod
+          cache-dependency-path: apps/ai-worker/go.sum
+
+      - name: Run go vet
+        working-directory: apps/ai-worker
+        run: go vet ./...
