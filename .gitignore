@@ -99,3 +99,5 @@ temp/
 # --- Misc ---
 *.orig
 *.rej
+
+/generated/prisma
